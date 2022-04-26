@@ -88,8 +88,6 @@ function saveFrontendFiles(daiToken, amsToken, tokenFarm, token) {
     JSON.stringify(TokenFarmArtifact, null, 2)
   );
  
-
-  
   // fs.writeFileSync(
   //   contractsDir + "/contract-address.json",
   //   JSON.stringify({ Token: token.address }, undefined, 2)

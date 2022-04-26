@@ -3,10 +3,11 @@ import web3 from 'web3';
 import dai from '../dai.png';
 
 export function Transfer({
-  stakeTokens,
+  transferTokens,         //unused
   stakingBalance = '0',
   amsTokenBalance = '0',
   daiTokenBalance = '0',
+  stakeTokens,
   unstakeTokens
 }) {
   const [amount, setAmount] = React.useState('');
