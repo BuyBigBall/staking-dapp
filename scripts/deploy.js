@@ -40,11 +40,20 @@ async function main() {
   // Transfer 100 Mock DAI tokens to investor
   await daiToken.transfer(await deployer.getAddress(), '100000000000000000000')
 
+
+  
+  const Token = await ethers.getContractFactory("Token");
+  const token = await Token.deploy();
+  await token.deployed();
+
+  console.log("Token address:", token.address);
+
+
   // We also save the contract's artifacts and address in the frontend directory
-  saveFrontendFiles(daiToken, amsToken, tokenFarm);
+  saveFrontendFiles(daiToken, amsToken, tokenFarm, token );
 }
 
-function saveFrontendFiles(daiToken, amsToken, tokenFarm) {
+function saveFrontendFiles(daiToken, amsToken, tokenFarm, token) {
   const fs = require("fs");
   const contractsDir = __dirname + "/../frontend/src/contracts";
 
@@ -57,7 +66,8 @@ function saveFrontendFiles(daiToken, amsToken, tokenFarm) {
     JSON.stringify({ 
       DaiToken: daiToken.address, 
       AMSToken: amsToken.address, 
-      TokenFarm: tokenFarm.address 
+      TokenFarm: tokenFarm.address ,
+      Token : token.address
     }, undefined, 2)
   );
 
@@ -77,6 +87,20 @@ function saveFrontendFiles(daiToken, amsToken, tokenFarm) {
     contractsDir + "/TokenFarm.json",
     JSON.stringify(TokenFarmArtifact, null, 2)
   );
+ 
+
+  
+  // fs.writeFileSync(
+  //   contractsDir + "/contract-address.json",
+  //   JSON.stringify({ Token: token.address }, undefined, 2)
+  // );
+  const TokenArtifact = artifacts.readArtifactSync("Token");
+
+  fs.writeFileSync(
+    contractsDir + "/Token.json",
+    JSON.stringify(TokenArtifact, null, 2)
+  );
+
 }
 
 main()
